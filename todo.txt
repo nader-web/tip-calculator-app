@@ -1,0 +1,10 @@
+Components
+================
+InputField.jsx
+TipInput.jsx
+PeopleInput.jsx
+TipPercentageSection.jsx
+ResultSection.jsx
+ResultOutput.jsx
+SubmitButton.jsx
+
