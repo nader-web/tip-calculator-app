@@ -12,35 +12,39 @@ function Container({
   onNumPeopleChange,
   onReset,
 }) {
-  const isValidBillAmount = !isNaN(billAmount) && billAmount >= 0;
-  const isValidTipPercentage = !isNaN(tipPercentage) && tipPercentage >= 0;
-  const isValidNumPeople = !isNaN(numPeople) && numPeople > 0;
-
   return (
-    <main className="main rounded-3xl h-dvh items-center relative p-8 w-full mt-4 flex flex-col gap-3 border  bg-white  font-sans md:mt-8 md:p-6 lg:mt-16 lg:h-[481px] lg:w-[920px] lg:flex-row   lg:gap-12 lg:rounded-3xl lg:p-8">
-      <div className="inputs flex  flex-col justify-between lg:w-1/2">
+    <main className="main mt-4 flex w-full flex-col gap-8 rounded-t-3xl bg-white p-8 shadow-2xl md:mt-8 md:p-6 lg:mt-12 lg:h-[481px] lg:w-[920px] lg:flex-row lg:gap-12 lg:rounded-3xl lg:p-8">
+      <div className="inputs flex flex-col justify-between lg:w-1/2 lg:py-2">
         <InputField
           path="./images/icon-dollar.svg"
           type="bill"
           label="Bill"
-          value={isValidBillAmount ? billAmount : ""}
+          value={billAmount}
           onChange={onBillAmountChange}
         />
         <TipPercentageSection
-          value={isValidTipPercentage ? tipPercentage * 100 : ""}
+          value={tipPercentage * 100}
           onChange={onTipPercentageChange}
         />
         <InputField
           path="./images/icon-person.svg"
+          type="people"
           label="Number of People"
-          value={isValidNumPeople ? numPeople : ""}
+          value={
+            numPeople === 0 || (isNaN(numPeople) && numPeople !== "")
+              ? numPeople
+              : isNaN(numPeople)
+                ? ""
+                : numPeople
+          }
           onChange={onNumPeopleChange}
+          error={numPeople === 0 ? "Can't be zero" : ""}
         />
       </div>
       <ResultOutput
-        billAmount={isValidBillAmount ? billAmount : 0}
-        tipPercentage={isValidTipPercentage ? tipPercentage : 0}
-        numPeople={isValidNumPeople ? numPeople : 1}
+        billAmount={billAmount}
+        tipPercentage={tipPercentage}
+        numPeople={numPeople}
         onReset={onReset}
       />
     </main>

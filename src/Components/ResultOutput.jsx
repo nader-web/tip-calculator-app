@@ -1,43 +1,49 @@
-import React from 'react';
-import ResetButton from './ResetButton';
+import React from "react";
+import ResetButton from "./ResetButton";
 
 function ResultOutput({ billAmount, tipPercentage, numPeople, onReset }) {
-  const isValidInput = billAmount >= 0 && tipPercentage >= 0 && numPeople > 0;
+  const bill = parseFloat(billAmount);
+  const isValidBill = !isNaN(bill) && bill >= 0;
+  const isValidPeople = numPeople > 0;
 
-  let tipAmount = '0.00';
-  let totalAmount = '0.00';
+  let tipAmount = 0.0;
+  let totalAmount = 0.0;
 
-  if (isValidInput) {
-    const validNumPeople = numPeople || 1;
-    const tipAmountBeforeRounding = (billAmount * tipPercentage) / validNumPeople;
-    tipAmount = tipAmountBeforeRounding.toFixed(2);
-    totalAmount = (billAmount / validNumPeople + parseFloat(tipAmount)).toFixed(2);
+  if (isValidBill && isValidPeople) {
+    const totalTip = bill * tipPercentage;
+    tipAmount = totalTip / numPeople;
+    totalAmount = (bill + totalTip) / numPeople;
   }
-  return (
-    <div className="result-sec pr-6 pl-6 pb-0flex  w-full flex-col justify-around relative rounded-xl border bg-primary lg:w-1/2 h-full lg:p-10 lg:justify-around flex">
-  <div className="result flex flex-col gap-8 lg:gap-16">
-    <div className="tip-amount flex justify-between">
-      <div className="titles">
-        <h3 className="text-white text-base lg:">Tip Amount</h3>
-        <span className="text-neutral-g-cyan text-sm lg:text-base">/ person</span>
-      </div>
-      <p className="amount text-4xl text-neutral-v-d-cyan lg:text-5xl">
-        ${tipAmount}
-      </p>
-    </div>
-    <div className="total-tip flex justify-between">
-      <div className="titles">
-        <h3 className="text-white text-base lg:">Total Amount</h3>
-        <span className="text-neutral-g-cyan text-sm lg:text-base">/ person</span>
-      </div>
-      <p className="amount text-4xl text-neutral-v-d-cyan  lg:text-5xl overflow-x-clip">
-        ${totalAmount}
-      </p>
-    </div>
-  </div>
-  <ResetButton onClick={onReset} />
-</div>
 
+  const isResetDisabled = !isValidBill || bill === 0;
+
+  return (
+    <div className="bg-neutral-v-d-cyan flex h-full w-full flex-col justify-between rounded-xl p-6 pt-9 lg:w-1/2 lg:rounded-2xl lg:p-10">
+      <div className="flex flex-col gap-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-base font-bold text-white">Tip Amount</h3>
+            <p className="text-neutral-g-cyan text-sm font-bold">/ person</p>
+          </div>
+          <p className="text-primary break-all text-3xl font-bold tracking-tight lg:text-5xl">
+            ${tipAmount.toFixed(2)}
+          </p>
+        </div>
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-base font-bold text-white">Total</h3>
+            <p className="text-neutral-g-cyan text-sm font-bold">/ person</p>
+          </div>
+          <p className="text-primary break-all text-3xl font-bold tracking-tight lg:text-5xl">
+            ${totalAmount.toFixed(2)}
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-8 lg:mt-auto">
+        <ResetButton onClick={onReset} disabled={isResetDisabled} />
+      </div>
+    </div>
   );
 }
 

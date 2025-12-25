@@ -1,4 +1,3 @@
-import "./App.css";
 import Container from "./Components/Container";
 import { useState } from "react";
 
@@ -22,7 +21,7 @@ function App() {
   };
 
   return (
-    <div className="App flex h-full flex-col items-center justify-center bg-neutral-l-cyan">
+    <div className="App bg-neutral-l-cyan flex h-full flex-col items-center justify-center">
       <div className="logo mb-5 mt-5">
         <img src="./images/logo.svg" alt="logo" />
       </div>

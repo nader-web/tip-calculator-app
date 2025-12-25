@@ -1,27 +1,14 @@
 import { useState } from "react";
 
-function CustomInput({ value, onChange }) {
-  const [inputValue, setInputValue] = useState("");
-
-  const handleChange = (e) => {
-    const newValue = e.target.value.slice(0, 3);
-    setInputValue(newValue);
-    if (newValue === "" || /^\d+$/.test(newValue)) {
-      onChange(newValue);
-    }
-  };
-
+function CustomInput({ value, onChange, className }) {
   return (
-    <div className="custom-input content-center ">
-      <input
-        type="number"
-        value={inputValue}
-        onChange={handleChange}
-        className="input text-center font-bold w-full h-full text-3xl outline-none p-0 bg-neutral-dark-g-cyan-g-cyan "
-        placeholder="Custom"
-        maxLength="3"
-      />
-    </div>
+    <input
+      type="number"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder="Custom"
+      className={`bg-neutral-v-l-cyan text-neutral-v-d-cyan placeholder:text-neutral-d-g-cyan focus:ring-primary caret-primary h-12 w-full cursor-pointer rounded-md px-4 text-right text-2xl font-bold outline-none focus:ring-2 ${className}`}
+    />
   );
 }
 

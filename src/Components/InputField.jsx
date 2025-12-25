@@ -1,30 +1,42 @@
+import clsx from "clsx";
 
-function InputField({ path, type, label, value, onChange }) {
+function InputField({ path, type, label, value, onChange, error }) {
   const handleChange = (e) => {
-    const newValue = e.target.value.slice(0, 3);
-    onChange(newValue);
+    // Determine the type of validation needed based on value logic in parent
+    onChange(e.target.value);
   };
 
   return (
-    <div className="input-field flex  flex-col h-24 lg:max-h-20 lg:w-full">
-    <label htmlFor="input" className="text-sm font-bold text-neutral-g-cyan max-sm:flex-1 lg:text-base">
-      {label}
-    </label>
-    <div className="flex items-center justify-between max-sm:max-h-11 flex-1 h-full rounded-lg bg-neutral-v-l-cyan px-5">
-      <img src={path} alt={type} className="h-6 w-6" />
-      <input
-        value={value}
-        type="number"
-        id="input"
-        onChange={handleChange}
-        placeholder="0"
-        className="w-full text-right text-3xl font-bold text-primary bg-transparent border-none outline-none"
-        min="0"
-      max="999"
-      />
+    <div className="mb-6 w-full">
+      <div className="mb-2 flex items-center justify-between">
+        <label
+          htmlFor={type}
+          className="text-neutral-d-g-cyan text-base font-bold"
+        >
+          {label}
+        </label>
+        {error && (
+          <span className="text-base font-bold text-red-500">{error}</span>
+        )}
+      </div>
+      <div
+        className={clsx(
+          "bg-neutral-v-l-cyan flex h-12 w-full cursor-pointer items-center justify-between rounded-lg px-4 focus-within:ring-2",
+          error ? "ring-2 ring-red-500" : "focus-within:ring-primary",
+        )}
+      >
+        <img src={path} alt={type} className="h-4 w-3" />
+        <input
+          value={value}
+          type="number"
+          id={type}
+          onChange={handleChange}
+          placeholder="0"
+          className="text-neutral-v-d-cyan placeholder:text-neutral-g-cyan caret-primary h-full w-full cursor-pointer border-none bg-transparent text-right text-2xl font-bold outline-none"
+        />
+      </div>
     </div>
-  </div>
-  
   );
 }
+
 export default InputField;
