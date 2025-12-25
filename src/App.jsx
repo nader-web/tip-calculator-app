@@ -7,13 +7,31 @@ function App() {
   const [numPeople, setNumPeople] = useState(1);
 
   const handleBillAmountChange = (value) => {
+    if (value === "") {
+      setBillAmount("");
+      return;
+    }
     const parsedValue = parseFloat(value);
     setBillAmount(isNaN(parsedValue) ? "" : parsedValue);
   };
 
-  const handleTipPercentageChange = (value) =>
-    setTipPercentage(parseFloat(value) / 100);
-  const handleNumPeopleChange = (value) => setNumPeople(parseInt(value));
+  const handleTipPercentageChange = (value) => {
+    if (value === "") {
+      setTipPercentage("");
+      return;
+    }
+    const parsed = parseFloat(value);
+    setTipPercentage(isNaN(parsed) ? "" : parsed / 100);
+  };
+
+  const handleNumPeopleChange = (value) => {
+    if (value === "") {
+      setNumPeople("");
+      return;
+    }
+    const parsed = parseInt(value);
+    setNumPeople(isNaN(parsed) ? "" : parsed);
+  };
   const handleReset = () => {
     setBillAmount("");
     setTipPercentage(0);

@@ -23,20 +23,14 @@ function Container({
           onChange={onBillAmountChange}
         />
         <TipPercentageSection
-          value={tipPercentage * 100}
+          value={tipPercentage === "" ? "" : tipPercentage * 100}
           onChange={onTipPercentageChange}
         />
         <InputField
           path="./images/icon-person.svg"
           type="people"
           label="Number of People"
-          value={
-            numPeople === 0 || (isNaN(numPeople) && numPeople !== "")
-              ? numPeople
-              : isNaN(numPeople)
-                ? ""
-                : numPeople
-          }
+          value={numPeople}
           onChange={onNumPeopleChange}
           error={numPeople === 0 ? "Can't be zero" : ""}
         />

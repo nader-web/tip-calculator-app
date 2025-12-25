@@ -2,8 +2,10 @@ import clsx from "clsx";
 
 function InputField({ path, type, label, value, onChange, error }) {
   const handleChange = (e) => {
-    // Determine the type of validation needed based on value logic in parent
-    onChange(e.target.value);
+    const val = e.target.value;
+    if (/^[0-9]*$/.test(val)) {
+      onChange(val );
+    }
   };
 
   return (
@@ -28,7 +30,9 @@ function InputField({ path, type, label, value, onChange, error }) {
         <img src={path} alt={type} className="h-4 w-3" />
         <input
           value={value}
-          type="number"
+          type="text"
+          pattern="[0-9]*"
+          inputMode="numeric"
           id={type}
           onChange={handleChange}
           placeholder="0"

@@ -3,9 +3,16 @@ import { useState } from "react";
 function CustomInput({ value, onChange, className }) {
   return (
     <input
-      type="number"
+      type="text"
+      pattern="[0-9]*"
+      inputMode="numeric"
       value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(e) => {
+        const val = e.target.value;
+        if (/^[0-9]*$/.test(val)) {
+          onChange(val);
+        }
+      }}
       placeholder="Custom"
       className={`bg-neutral-v-l-cyan text-neutral-v-d-cyan placeholder:text-neutral-d-g-cyan focus:ring-primary caret-primary h-12 w-full cursor-pointer rounded-md px-4 text-right text-2xl font-bold outline-none focus:ring-2 ${className}`}
     />
